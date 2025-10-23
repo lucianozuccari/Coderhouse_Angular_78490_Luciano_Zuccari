@@ -1,0 +1,59 @@
+<div class="page-background">
+  <div class="login-container">
+
+    <div class="logo-container">
+      <img src="https://i.pinimg.com/736x/35/9a/3f/359a3f53b2795068d1a2663ff0bda3a5.jpg" class="logo">
+    </div>
+
+    <div class="login-header">
+      <h2 style="margin-bottom: 50px;">Academia Imperial</h2>
+      <div class="separator">
+        <span style="border-radius: 8px;">Ingrese usando sus credenciales</span>
+      </div>
+    </div>
+
+    <form [formGroup]="accessForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <input type="email" tabindex="1" class="form-input" formControlName="usernameOrEmail"
+          placeholder="usuario o correo electrónico"
+          [class.error]="accessForm.get('usernameOrEmail')?.hasError('required') && accessForm.get('usernameOrEmail')?.touched">
+
+        <div class="error-message"
+          *ngIf="accessForm.get('usernameOrEmail')?.hasError('required') && accessForm.get('usernameOrEmail')?.touched">
+          nombre de usuario o correo electrónico es obligatorio
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="password-container">
+          <input [type]="hidePassword ? 'password' : 'text'" class="form-input" formControlName="password"
+            placeholder="password" #passwordInput>
+
+          <button type="button" class="password-toggle" (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+
+          <div class="error-message"
+            *ngIf="accessForm.get('password')?.hasError('required') && accessForm.get('password')?.touched">
+            la contraseña es obligatoria
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-options">
+        <div class="checkbox-container">
+          <input type="checkbox" id="rememberMe" formControlName="rememberMe">
+          <label for="remember">Recordarme</label>
+        </div>
+        <a href="#" class="forgot-password">Recuperar contraseña</a>
+      </div>
+
+      <div>
+        <button type="submit" class="login-button">Iniciar sesión</button>
+              </div>
+
+    </form>
+  </div>
+</div>
