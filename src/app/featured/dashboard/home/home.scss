@@ -14,8 +14,7 @@
   justify-content: center;
   padding: 40px 20px;
   box-sizing: border-box;
-//   width: 100vw;
-
+  //   width: 100vw;
 }
 
 // Estrellas de fondo
@@ -25,8 +24,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, #ff0000, transparent),
+  background-image: radial-gradient(2px 2px at 20px 30px, #ff0000, transparent),
     radial-gradient(2px 2px at 60px 70px, #cc0000, transparent),
     radial-gradient(1px 1px at 50px 50px, #ff0000, transparent),
     radial-gradient(1px 1px at 130px 80px, #990000, transparent),
@@ -42,7 +40,9 @@
 .imperial-logo {
   margin-bottom: 40px;
   animation: fadeInDown 1s ease;
-  
+  margin-top: 30px;
+  margin-bottom: 100px;
+
   .logo-circle {
     width: 120px;
     height: 120px;
@@ -52,12 +52,10 @@
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(0, 0, 0, 0.95));
-    box-shadow: 
-      0 0 40px rgba(139, 0, 0, 0.8),
-      inset 0 0 30px rgba(139, 0, 0, 0.3);
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.8), inset 0 0 30px rgba(139, 0, 0, 0.3);
     position: relative;
-    animation: pulse-glow 3s infinite;
-    
+    // animation: pulse-glow 3s infinite;
+
     &::before {
       content: '';
       position: absolute;
@@ -72,14 +70,16 @@
       animation: imperial-glow 3s ease infinite;
       opacity: 0.6;
     }
-    
+
     .empire-icon {
       font-size: 64px;
-      width: 64px;
-      height: 64px;
+      max-width: 160px;
+      height: auto;
+      //   width: 64px;
+      //   height: 64px;
       color: #ff0000;
       filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.9));
-      animation: rotate-slow 20s linear infinite;
+    //   animation: rotate-slow 20s linear infinite;
     }
   }
 }
@@ -89,26 +89,24 @@
   text-align: center;
   margin-bottom: 50px;
   animation: fadeInUp 1s ease 0.3s both;
-  
+
   .title-line-1 {
     font-size: 64px;
     font-weight: bold;
     color: #ff0000;
     letter-spacing: 12px;
     margin: 0;
-    text-shadow: 
-      0 0 20px rgba(255, 0, 0, 0.9),
-      0 0 40px rgba(255, 0, 0, 0.6),
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.6),
       0 0 60px rgba(255, 0, 0, 0.4);
     font-family: 'Courier New', monospace;
     animation: glow-pulse 2s ease-in-out infinite;
-    
+
     @media (max-width: 768px) {
       font-size: 36px;
       letter-spacing: 6px;
     }
   }
-  
+
   .title-divider {
     width: 300px;
     height: 3px;
@@ -117,7 +115,7 @@
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
     animation: expand-line 2s ease;
   }
-  
+
   .title-line-2 {
     font-size: 24px;
     color: #cc0000;
@@ -126,20 +124,20 @@
     font-weight: 300;
     text-shadow: 0 0 10px rgba(204, 0, 0, 0.7);
     font-family: 'Courier New', monospace;
-    
+
     @media (max-width: 768px) {
       font-size: 16px;
       letter-spacing: 3px;
     }
   }
-  
+
   .subtitle {
     font-size: 18px;
     color: #888888;
     letter-spacing: 4px;
     margin-top: 10px;
     font-style: italic;
-    
+
     @media (max-width: 768px) {
       font-size: 14px;
       letter-spacing: 2px;
@@ -153,32 +151,32 @@
   text-align: center;
   margin-bottom: 60px;
   animation: fadeInUp 1s ease 0.6s both;
-  
+
   .message-text {
     font-size: 18px;
     color: #cccccc;
     line-height: 1.8;
     margin-bottom: 25px;
     font-family: 'Courier New', monospace;
-    
+
     @media (max-width: 768px) {
       font-size: 16px;
     }
   }
-  
+
   .message-quote {
     font-size: 20px;
     color: #ff4444;
     font-style: italic;
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
-    
+
     &::before,
     &::after {
       content: '"';
       color: #8b0000;
     }
-    
+
     @media (max-width: 768px) {
       font-size: 16px;
     }
@@ -194,15 +192,15 @@
   width: 100%;
   margin-bottom: 60px;
   animation: fadeInUp 1s ease 0.9s both;
-  
+
   @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
   }
-  
+
   .access-card {
     background: linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(0, 0, 0, 0.95));
     border: 2px solid #8b0000;
@@ -213,10 +211,8 @@
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 
-      0 0 30px rgba(139, 0, 0, 0.5),
-      inset 0 0 30px rgba(139, 0, 0, 0.1);
-    
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.5), inset 0 0 30px rgba(139, 0, 0, 0.1);
+
     &::before {
       content: '';
       position: absolute;
@@ -227,7 +223,7 @@
       background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
       transition: left 0.6s;
     }
-    
+
     .card-glow {
       position: absolute;
       top: -2px;
@@ -242,10 +238,10 @@
       transition: opacity 0.4s;
       animation: imperial-glow 3s ease infinite;
     }
-    
+
     .card-icon {
       margin-bottom: 20px;
-      
+
       mat-icon {
         font-size: 64px;
         width: 64px;
@@ -255,7 +251,7 @@
         transition: all 0.4s ease;
       }
     }
-    
+
     h3 {
       font-size: 24px;
       color: #ff0000;
@@ -265,7 +261,7 @@
       font-family: 'Courier New', monospace;
       transition: all 0.4s ease;
     }
-    
+
     p {
       font-size: 14px;
       color: #888888;
@@ -273,38 +269,36 @@
       font-family: 'Courier New', monospace;
       transition: all 0.4s ease;
     }
-    
+
     &:hover {
       transform: translateY(-10px) scale(1.05);
       border-color: #ff0000;
-      box-shadow: 
-        0 0 50px rgba(255, 0, 0, 0.8),
-        inset 0 0 40px rgba(255, 0, 0, 0.2);
-      
+      box-shadow: 0 0 50px rgba(255, 0, 0, 0.8), inset 0 0 40px rgba(255, 0, 0, 0.2);
+
       &::before {
         left: 100%;
       }
-      
+
       .card-glow {
         opacity: 0.6;
       }
-      
+
       .card-icon mat-icon {
         color: #ff0000;
         filter: drop-shadow(0 0 20px rgba(255, 0, 0, 1));
         transform: scale(1.2) rotate(5deg);
       }
-      
+
       h3 {
         color: #ffffff;
         text-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
       }
-      
+
       p {
         color: #cccccc;
       }
     }
-    
+
     &:active {
       transform: translateY(-5px) scale(1.02);
     }
@@ -319,17 +313,17 @@
   margin-bottom: 60px;
   animation: fadeInUp 1s ease 1.2s both;
   flex-wrap: wrap;
-  
+
   @media (max-width: 768px) {
     gap: 40px;
   }
-  
+
   .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    
+
     mat-icon {
       font-size: 48px;
       width: 48px;
@@ -337,7 +331,7 @@
       color: #8b0000;
       filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.7));
     }
-    
+
     .stat-number {
       font-size: 36px;
       font-weight: bold;
@@ -346,7 +340,7 @@
       font-family: 'Courier New', monospace;
       letter-spacing: 2px;
     }
-    
+
     .stat-label {
       font-size: 14px;
       color: #888888;
@@ -361,7 +355,7 @@
 .imperial-footer {
   text-align: center;
   animation: fadeInUp 1s ease 1.5s both;
-  
+
   p {
     font-size: 16px;
     color: #ff0000;
@@ -371,7 +365,7 @@
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
     font-family: 'Courier New', monospace;
   }
-  
+
   .footer-line {
     width: 200px;
     height: 2px;
@@ -383,7 +377,8 @@
 
 // Animaciones
 @keyframes twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.2;
   }
   50% {
@@ -392,15 +387,12 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 
-      0 0 40px rgba(139, 0, 0, 0.8),
-      inset 0 0 30px rgba(139, 0, 0, 0.3);
+  0%,
+  100% {
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.8), inset 0 0 30px rgba(139, 0, 0, 0.3);
   }
   50% {
-    box-shadow: 
-      0 0 60px rgba(255, 0, 0, 1),
-      inset 0 0 40px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 60px rgba(255, 0, 0, 1), inset 0 0 40px rgba(255, 0, 0, 0.5);
   }
 }
 
@@ -426,16 +418,13 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
-    text-shadow: 
-      0 0 20px rgba(255, 0, 0, 0.9),
-      0 0 40px rgba(255, 0, 0, 0.6),
+  0%,
+  100% {
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.6),
       0 0 60px rgba(255, 0, 0, 0.4);
   }
   50% {
-    text-shadow: 
-      0 0 30px rgba(255, 0, 0, 1),
-      0 0 60px rgba(255, 0, 0, 0.8),
+    text-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8),
       0 0 90px rgba(255, 0, 0, 0.6);
   }
 }
