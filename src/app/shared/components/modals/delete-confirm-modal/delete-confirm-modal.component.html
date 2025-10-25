@@ -1,0 +1,41 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="onBackdropClick($event)">
+  <div class="modal-container">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-header-content">
+        <mat-icon class="warning-icon">warning</mat-icon>
+        <h3>Confirmar eliminación</h3>
+      </div>
+      <button type="button" class="close-button" (click)="closeModal()" [disabled]="isDeleting">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <p *ngIf="confirmMessage">{{ confirmMessage }}</p>
+
+      <!-- Contenido extra personalizado -->
+       <div class="form-info">
+        <ng-container *ngIf="extraInfoTemplate"
+                      [ngTemplateOutlet]="extraInfoTemplate">
+        </ng-container>
+      </div>
+
+      <p class="warning-text">Esta acción no se puede deshacer.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button mat-button type="button" class="cancel-button" (click)="closeModal()" [disabled]="isDeleting">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+      <button mat-button type="button" class="delete-button" (click)="confirmDelete()" [disabled]="isDeleting">
+        
+        <mat-icon>delete</mat-icon>
+        {{ isDeleting ? 'Eliminando...' : 'Eliminar' }}
+      </button>
+    </div>
+  </div>
+</div>

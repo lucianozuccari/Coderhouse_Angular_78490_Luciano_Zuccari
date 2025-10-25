@@ -16,6 +16,12 @@ html {
     density: 0,
   ));
 }
+/* Sobrescribir variables del tema */
+:root {
+  --mat-sys-surface: #000000;        // fondo principal
+  --mat-sys-background: #000000;     // fondo de superficie secundaria
+  --mat-sys-on-surface: #ffffff;     // texto sobre fondo oscuro
+}
 
 body {
   // Default the application to a light color theme. This can be changed to
@@ -35,5 +41,5 @@ body {
 }
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: #000 !important; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

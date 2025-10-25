@@ -1,0 +1,606 @@
+// Dark Side - Imperio Galáctico Theme
+
+.main-container {
+  padding: 24px;
+  background: radial-gradient(ellipse at center, #1a0000 0%, #000000 70%);
+  min-height: 100vh;
+  position: relative;
+  
+  // Efecto de estrellas rojas de fondo
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(1px 1px at 20px 30px, #ff0000, transparent),
+      radial-gradient(1px 1px at 60px 70px, #cc0000, transparent),
+      radial-gradient(1px 1px at 50px 50px, #ff0000, transparent),
+      radial-gradient(1px 1px at 130px 80px, #990000, transparent),
+      radial-gradient(1px 1px at 90px 10px, #ff0000, transparent);
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+    animation: twinkle 4s infinite;
+  }
+  
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+
+  .filter-input {
+    background: rgba(20, 0, 0, 0.8);
+    border: 2px solid #8b0000;
+    border-radius: 4px;
+    padding: 12px 16px;
+    color: #ff4444;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.5),
+      inset 0 0 10px rgba(139, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    
+    &::placeholder {
+      color: rgba(255, 68, 68, 0.4);
+      text-transform: uppercase;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: #ff0000;
+      box-shadow: 
+        0 0 25px rgba(255, 0, 0, 0.7),
+        inset 0 0 15px rgba(255, 0, 0, 0.3);
+      color: #ff0000;
+    }
+  }
+}
+
+.btn-create {
+  background: linear-gradient(145deg, #2a0000, #000000) !important;
+  color: #ff0000 !important;
+  border: 2px solid #8b0000 !important;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  box-shadow: 
+    0 0 20px rgba(139, 0, 0, 0.6),
+    inset 0 0 10px rgba(139, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 0, 0, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    background: linear-gradient(145deg, #4a0000, #1a0000) !important;
+    color: #ffffff !important;
+    border-color: #ff0000 !important;
+    box-shadow: 
+      0 0 30px rgba(255, 0, 0, 0.9),
+      inset 0 0 20px rgba(255, 0, 0, 0.3);
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    &::after {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.mat-elevation-z8 {
+  background: linear-gradient(135deg, rgba(20, 0, 0, 0.95), rgba(0, 0, 0, 0.98));
+  backdrop-filter: blur(10px);
+  border: 2px solid #8b0000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 
+    0 0 40px rgba(139, 0, 0, 0.6),
+    inset 0 0 50px rgba(139, 0, 0, 0.1);
+  position: relative;
+
+  // Borde animado estilo Sith
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff0000, #8b0000, #ff0000, #8b0000);
+    background-size: 400% 400%;
+    border-radius: 8px;
+    z-index: -1;
+    animation: imperial-glow 3s ease infinite;
+    opacity: 0.3;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th.mat-header-cell {
+      background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
+      color: #ff0000;
+      font-weight: bold;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      border-bottom: 3px solid #8b0000;
+      padding: 16px 12px;
+      text-shadow: 
+        0 0 10px rgba(255, 0, 0, 0.8),
+        0 0 20px rgba(255, 0, 0, 0.5);
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          #ff0000 50%, 
+          transparent 100%);
+        animation: sith-scanline 2s linear infinite;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          rgba(255, 0, 0, 0.5) 50%, 
+          transparent 100%);
+      }
+    }
+
+    td.mat-cell {
+      border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+      padding: 14px 12px;
+      color: #888888;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      position: relative;
+      transition: all 0.3s ease;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0;
+        background: linear-gradient(180deg, transparent, #ff0000, transparent);
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px #ff0000;
+      }
+    }
+
+    tr.mat-header-row {
+      height: 56px;
+    }
+
+    tr.mat-row {
+      height: 52px;
+      transition: all 0.3s ease;
+      position: relative;
+      background: linear-gradient(90deg, rgba(10, 0, 0, 0.3) 0%, rgba(20, 0, 0, 0.2) 100%);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          rgba(139, 0, 0, 0.4) 50%, 
+          transparent 100%);
+      }
+
+      &:hover {
+        background: linear-gradient(90deg, 
+          rgba(139, 0, 0, 0.2) 0%, 
+          rgba(255, 0, 0, 0.15) 50%, 
+          rgba(139, 0, 0, 0.2) 100%);
+        box-shadow: 
+          inset 0 0 30px rgba(255, 0, 0, 0.2),
+          0 0 20px rgba(255, 0, 0, 0.3);
+        transform: scale(1.005);
+        cursor: pointer;
+        border-left: 3px solid #ff0000;
+        
+        td.mat-cell {
+          color: #ff4444;
+          text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+          
+          &::before {
+            width: 3px;
+          }
+        }
+      }
+
+      &:active {
+        background: linear-gradient(90deg, 
+          rgba(255, 0, 0, 0.3) 0%, 
+          rgba(255, 0, 0, 0.2) 50%, 
+          rgba(255, 0, 0, 0.3) 100%);
+      }
+    }
+
+    tr.mat-row:nth-child(even) {
+      background-color: rgba(15, 0, 0, 0.4);
+    }
+
+    tr.mat-row:nth-child(odd) {
+      background-color: rgba(5, 0, 0, 0.4);
+    }
+  }
+
+  // Mensaje cuando no hay datos
+  .mat-row.mat-row {
+    &:has(.mat-cell[colspan]) {
+      background: rgba(20, 0, 0, 0.6);
+      
+      .mat-cell {
+        text-align: center;
+        color: #ff0000;
+        font-style: italic;
+        padding: 24px;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+      }
+    }
+  }
+
+  mat-paginator {
+    background: linear-gradient(180deg, rgba(20, 0, 0, 0.9), rgba(0, 0, 0, 0.95));
+    border-top: 2px solid #8b0000;
+    color: #ff0000;
+    box-shadow: inset 0 5px 15px rgba(139, 0, 0, 0.2);
+
+    ::ng-deep {
+      .mat-paginator-range-label,
+      .mat-paginator-page-size-label {
+        color: #888888;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 1px;
+      }
+
+      .mat-paginator-navigation-next,
+      .mat-paginator-navigation-previous,
+      .mat-paginator-navigation-first,
+      .mat-paginator-navigation-last {
+        color: #8b0000;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        
+        &:hover:not([disabled]) {
+          background-color: rgba(139, 0, 0, 0.3);
+          border-color: #ff0000;
+          color: #ff0000;
+          box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+        
+        &[disabled] {
+          color: rgba(139, 0, 0, 0.3);
+        }
+      }
+
+      .mat-select-value-text,
+      .mat-select-arrow {
+        color: #888888;
+      }
+
+      .mat-select-value:hover {
+        .mat-select-value-text,
+        .mat-select-arrow {
+          color: #ff0000;
+        }
+      }
+    }
+  }
+
+  // Botones de acción
+  button {
+    margin: 2px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &.mat-icon-button {
+      border: 1px solid transparent;
+      background: rgba(20, 0, 0, 0.3);
+      
+      mat-icon {
+        color: #8b0000;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 0 3px rgba(139, 0, 0, 0.6));
+      }
+
+      &:hover {
+        background-color: rgba(139, 0, 0, 0.3);
+        border-color: #8b0000;
+        box-shadow: 
+          0 0 15px rgba(139, 0, 0, 0.5),
+          inset 0 0 10px rgba(139, 0, 0, 0.2);
+        
+        mat-icon {
+          color: #ff0000;
+          filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.9));
+          transform: scale(1.2) rotate(5deg);
+        }
+      }
+      
+      // Botón de eliminar más agresivo
+      &[mattooltip*="Delete"]:hover {
+        border-color: #ff0000;
+        background-color: rgba(255, 0, 0, 0.3);
+        box-shadow: 
+          0 0 20px rgba(255, 0, 0, 0.7),
+          inset 0 0 15px rgba(255, 0, 0, 0.3);
+        
+        mat-icon {
+          color: #ff3333;
+          filter: drop-shadow(0 0 10px rgba(255, 0, 0, 1));
+          transform: scale(1.3) rotate(180deg);
+        }
+      }
+
+      // Botón de editar
+      &[mattooltip*="Edit"]:hover {
+        mat-icon {
+          transform: scale(1.2) rotate(-5deg);
+        }
+      }
+    }
+  }
+}
+
+.column-actions {
+  width: 150px;
+//   text-align: center;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+  gap: 4px;
+}
+
+// Modal de confirmación Dark Side
+::ng-deep delete-confirm-modal {
+  .modal-backdrop {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(8px);
+  }
+  
+  .modal-content {
+    background: linear-gradient(135deg, #1a0000 0%, #000000 100%);
+    border: 3px solid #8b0000;
+    border-radius: 8px;
+    box-shadow: 
+      0 0 50px rgba(139, 0, 0, 0.8),
+      inset 0 0 50px rgba(139, 0, 0, 0.2);
+    color: #888888;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: linear-gradient(45deg, #ff0000, #8b0000, #ff0000);
+      background-size: 400% 400%;
+      border-radius: 8px;
+      z-index: -1;
+      animation: imperial-glow 3s ease infinite;
+      opacity: 0.4;
+    }
+    
+    .modal-header {
+      border-bottom: 2px solid #8b0000;
+      color: #ff0000;
+      text-shadow: 
+        0 0 10px rgba(255, 0, 0, 0.8),
+        0 0 20px rgba(255, 0, 0, 0.5);
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
+    .form-info {
+      p {
+        color: #888888;
+        font-family: 'Courier New', monospace;
+        
+        strong {
+          color: #ff0000;
+          text-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
+          letter-spacing: 1px;
+        }
+      }
+    }
+    
+    button {
+      border: 2px solid #8b0000;
+      background: linear-gradient(145deg, #2a0000, #000000);
+      color: #ff0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+      
+      &:hover {
+        background: linear-gradient(145deg, #4a0000, #1a0000);
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+        color: #ffffff;
+        border-color: #ff0000;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        transform: translateY(-2px);
+      }
+      
+      &.btn-cancel,
+      &.btn-secondary {
+        background: linear-gradient(145deg, #1a1a1a, #000000);
+        border-color: #444444;
+        color: #888888;
+        
+        &:hover {
+          background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+          border-color: #666666;
+          color: #cccccc;
+          box-shadow: 0 0 15px rgba(100, 100, 100, 0.5);
+        }
+      }
+      
+      &.btn-danger,
+      &.btn-confirm {
+        border-color: #ff0000;
+        background: linear-gradient(145deg, #4a0000, #1a0000);
+        color: #ff0000;
+        
+        &:hover {
+          background: linear-gradient(145deg, #6a0000, #2a0000);
+          box-shadow: 
+            0 0 30px rgba(255, 0, 0, 0.9),
+            inset 0 0 20px rgba(255, 0, 0, 0.3);
+          color: #ffffff;
+          border-color: #ff3333;
+        }
+        
+        &:active {
+          transform: translateY(0);
+          box-shadow: 
+            0 0 40px rgba(255, 0, 0, 1),
+            inset 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+}
+
+// Animaciones Dark Side
+@keyframes sith-scanline {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes imperial-glow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+// Ajustes para Angular Material Dark Side
+::ng-deep {
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgba(20, 0, 0, 0.8);
+    border: 1px solid #8b0000;
+    border-radius: 4px;
+  }
+  
+  .mat-form-field-label {
+    color: #ff0000 !important;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+  }
+  
+  .mat-input-element {
+    color: #888888 !important;
+    
+    &:focus {
+      color: #ff4444 !important;
+    }
+  }
+
+  // Tooltip Dark Side
+  .mat-tooltip {
+    background: rgba(20, 0, 0, 0.95);
+    color: #ff0000;
+    border: 1px solid #8b0000;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.6);
+    font-family: 'Courier New', monospace;
+  }
+}
