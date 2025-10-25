@@ -168,7 +168,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    
+    table-layout: fixed;
 
     th.mat-header-cell {
       background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
