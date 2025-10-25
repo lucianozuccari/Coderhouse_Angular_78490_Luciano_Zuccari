@@ -1,1 +1,85 @@
-<p>home works!</p>
+<div class="home-container">
+  <!-- Overlay de estrellas -->
+  <div class="stars-overlay"></div>
+
+  <!-- Logo Imperial -->
+  <div class="imperial-logo">
+    <div class="logo-circle">
+      <mat-icon class="empire-icon">shield</mat-icon>
+    </div>
+  </div>
+
+  <!-- Título Principal -->
+  <div class="main-title">
+    <h1 class="title-line-1">IMPERIAL ACADEMY</h1>
+    <div class="title-divider"></div>
+    <h2 class="title-line-2">GALACTIC EMPIRE TRAINING FACILITY</h2>
+    <p class="subtitle">Order • Discipline • Power</p>
+  </div>
+
+  <!-- Mensaje de Bienvenida -->
+  <div class="welcome-message">
+    <p class="message-text">
+      Bienvenido a la Academia Imperial. Aquí forjaremos el futuro del Imperio Galáctico.
+      La disciplina es tu guía, el orden es tu camino, y el poder será tu recompensa.
+    </p>
+    <p class="message-quote">
+      "Peace is a lie. There is only Passion."
+    </p>
+  </div>
+
+  <!-- Tarjetas de Acceso Rápido -->
+  <div class="quick-access">
+    <div class="access-card" (click)="navigateTo('courses')">
+      <div class="card-icon">
+        <mat-icon>school</mat-icon>
+      </div>
+      <h3>Cursos</h3>
+      <p>Programas de entrenamiento Imperial</p>
+      <div class="card-glow"></div>
+    </div>
+
+    <div class="access-card" (click)="navigateTo('students')">
+      <div class="card-icon">
+        <mat-icon>groups</mat-icon>
+      </div>
+      <h3>Estudiantes</h3>
+      <p>Cadetes y oficiales en formación</p>
+      <div class="card-glow"></div>
+    </div>
+
+    <div class="access-card" (click)="navigateTo('inscriptions')">
+      <div class="card-icon">
+        <mat-icon>assignment</mat-icon>
+      </div>
+      <h3>Inscripciones</h3>
+      <p>Registro y asignaciones</p>
+      <div class="card-glow"></div>
+    </div>
+  </div>
+
+  <!-- Stats del Imperio -->
+  <div class="empire-stats">
+    <div class="stat-item">
+      <mat-icon>military_tech</mat-icon>
+      <span class="stat-number">1000+</span>
+      <span class="stat-label">Cadetes Activos</span>
+    </div>
+    <div class="stat-item">
+      <mat-icon>workspace_premium</mat-icon>
+      <span class="stat-number">50+</span>
+      <span class="stat-label">Programas de Elite</span>
+    </div>
+    <div class="stat-item">
+      <mat-icon>emoji_events</mat-icon>
+      <span class="stat-number">98%</span>
+      <span class="stat-label">Tasa de Éxito</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="imperial-footer">
+    <p>LONG LIVE THE EMPIRE</p>
+    <div class="footer-line"></div>
+  </div>
+</div>
