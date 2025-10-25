@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../../../../core/services/courses/courses';
-import { Course } from '../../../../../core/services/courses/model/Course';
+import { 
+  Course, 
+  CourseLevel, 
+  CourseRanks, 
+  CourseCategory, 
+  CourseLanguage, 
+  CourseAuthority 
+} from '../../../../../core/services/courses/model/Course';
 
 @Component({
   selector: 'app-courses-form',
@@ -16,12 +23,12 @@ export class CoursesForm implements OnInit {
   courseId: string | null = null;
   isSaving = false;
 
-  
-  categories = ['Jedi Training', 'Sith Arts', 'Galactic Politics', 'Starship Engineering', 'Alien Languages', 'Galactic History', 'Force Studies', 'Combat Tactics'];
-  levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
-  ranks = ['Cadet', 'Subofficer', 'Officer', 'Commander', 'Moff', 'Sith Lord'];
-  languages = ['Huttese', 'Shyriiwook', 'Droid', 'Mando', 'Basic'];
-  authorities = ['Jedi Council', 'Sith Order', 'Republic Academy', 'Imperial Academy'];
+  // Obtener los valores directamente de los enums
+  categories = Object.values(CourseCategory);
+  levels = Object.values(CourseLevel);
+  ranks = Object.values(CourseRanks);
+  languages = Object.values(CourseLanguage);
+  authorities = Object.values(CourseAuthority);
 
   constructor(
     private fb: FormBuilder,
@@ -66,15 +73,18 @@ export class CoursesForm implements OnInit {
 
   onSubmit() {
     if (this.courseForm.valid) {
-      console.log('Saving...')
+      console.log('Saving...');
       this.isSaving = true;
       const courseData = this.courseForm.value;
 
       setTimeout(() => {
         if (this.isEditMode && this.courseId) {
-          this.courseService.updateCourse({ ...courseData, id: Number(this.courseId) });
+          this.courseService.updateCourse({ 
+            ...courseData, 
+            id: Number(this.courseId) 
+          } as Course);
         } else {
-          this.courseService.addCourse(courseData);
+          this.courseService.addCourse(courseData as Course);
         }
         this.isSaving = false;
         this.goBack();

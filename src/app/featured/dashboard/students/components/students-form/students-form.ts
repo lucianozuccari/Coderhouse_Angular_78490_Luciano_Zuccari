@@ -16,54 +16,14 @@ export class StudentsForm implements OnInit {
   studentId: string | null = null;
   isSaving = false;
 
-  species = [
-    { value: StudentSpecies.HUMAN, label: 'Human' },
-    { value: StudentSpecies.TWI_LEK, label: "Twi'lek" },
-    { value: StudentSpecies.CHISS, label: 'Chiss' },
-    { value: StudentSpecies.ZABRAK, label: 'Zabrak' },
-    { value: StudentSpecies.RODIAN, label: 'Rodian' },
-    { value: StudentSpecies.TRANDOSHAN, label: 'Trandoshan' },
-    { value: StudentSpecies.MON_CALAMARI, label: 'Mon Calamari' },
-    { value: StudentSpecies.WOOKIEE, label: 'Wookiee' },
-    { value: StudentSpecies.BOTHAN, label: 'Bothan' },
-    { value: StudentSpecies.DUROS, label: 'Duros' },
-    { value: StudentSpecies.TOGRUTA, label: 'Togruta' },
-    { value: StudentSpecies.NAUTOLAN, label: 'Nautolan' },
-    { value: StudentSpecies.MIRIALAN, label: 'Mirialan' },
-    { value: StudentSpecies.DATHOMIRIAN, label: 'Dathomirian' },
-    { value: StudentSpecies.GEONOSIAN, label: 'Geonosian' }
-  ];
-
-  specializations = [
-    { value: StudentSpecialization.COMBAT_PILOT, label: 'Combat Pilot' },
-    { value: StudentSpecialization.DIPLOMACY, label: 'Diplomacy & Relations' },
-    { value: StudentSpecialization.LOGISTICS, label: 'Logistics & Supply' },
-    { value: StudentSpecialization.INFANTRY, label: 'Infantry Operations' },
-    { value: StudentSpecialization.AT_PILOT, label: 'AT Walker Pilot' },
-    { value: StudentSpecialization.COMMAND_CONTROL, label: 'Command & Control' },
-    { value: StudentSpecialization.PROVISIONS, label: 'Provisions & Resources' },
-    { value: StudentSpecialization.ADMINISTRATION, label: 'Imperial Administration' },
-    { value: StudentSpecialization.INTELLIGENCE, label: 'Intelligence & Espionage' },
-    { value: StudentSpecialization.NAVAL_OPERATIONS, label: 'Naval Operations' },
-    { value: StudentSpecialization.ENGINEERING, label: 'Military Engineering' },
-    { value: StudentSpecialization.MEDICAL_CORPS, label: 'Medical Corps' },
-    { value: StudentSpecialization.COMMUNICATIONS, label: 'Communications & Signals' },
-    { value: StudentSpecialization.SPECIAL_FORCES, label: 'Special Forces' },
-    { value: StudentSpecialization.ARTILLERY, label: 'Artillery & Heavy Weapons' }
-  ];
-
-  ranks = [
-    { value: StudentRanks.CADET, label: 'Cadet' },
-    { value: StudentRanks.SUBOFFICER, label: 'Subofficer' },
-    { value: StudentRanks.OFFICER, label: 'Officer' },
-    { value: StudentRanks.COMMANDER, label: 'Commander' },
-    { value: StudentRanks.MOFF, label: 'Moff' },
-    { value: StudentRanks.SITH_LORD, label: 'Sith Lord' }
-  ];
+  // Obtener los valores directamente de los enums
+  species = Object.values(StudentSpecies);
+  specializations = Object.values(StudentSpecialization);
+  ranks = Object.values(StudentRanks);
 
   constructor(
     private fb: FormBuilder,
-    private studentsService: StudentService,
+    private studentService: StudentService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -92,7 +52,7 @@ export class StudentsForm implements OnInit {
   }
 
   loadStudent(id: string) {
-    this.studentsService.students$.subscribe((students) => {
+    this.studentService.students$.subscribe((students) => {
       const student = students.find((s) => s.id === Number(id));
       if (student) {
         // Convertir la fecha a formato YYYY-MM-DD para el input date
@@ -116,12 +76,12 @@ export class StudentsForm implements OnInit {
 
       setTimeout(() => {
         if (this.isEditMode && this.studentId) {
-          this.studentsService.updateStudent({ 
+          this.studentService.updateStudent({
             ...studentData, 
             id: Number(this.studentId) 
           } as Student);
         } else {
-          this.studentsService.addStudent(studentData as Student);
+          this.studentService.addStudent(studentData as Student);
         }
         this.isSaving = false;
         this.goBack();

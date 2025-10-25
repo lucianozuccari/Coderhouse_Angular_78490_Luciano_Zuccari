@@ -45,8 +45,8 @@
             <mat-form-field appearance="fill" class="dark-field">
               <mat-label>Especie</mat-label>
               <mat-select formControlName="species">
-                <mat-option *ngFor="let spec of species" [value]="spec.value">
-                  {{ spec.label }}
+                <mat-option *ngFor="let spec of species" [value]="spec">
+                  {{ spec }}
                 </mat-option>
               </mat-select>
               <mat-icon matPrefix>pets</mat-icon>
@@ -61,8 +61,8 @@
             <mat-form-field appearance="fill" class="dark-field">
               <mat-label>Especialización</mat-label>
               <mat-select formControlName="specialization">
-                <mat-option *ngFor="let spec of specializations" [value]="spec.value">
-                  {{ spec.label }}
+                <mat-option *ngFor="let spec of specializations" [value]="spec">
+                  {{ spec }}
                 </mat-option>
               </mat-select>
               <mat-icon matPrefix>school</mat-icon>
@@ -77,8 +77,8 @@
             <mat-form-field appearance="fill" class="dark-field">
               <mat-label>Rango</mat-label>
               <mat-select formControlName="rank">
-                <mat-option *ngFor="let r of ranks" [value]="r.value">
-                  {{ r.label }}
+                <mat-option *ngFor="let r of ranks" [value]="r">
+                  {{ r }}
                 </mat-option>
               </mat-select>
               <mat-icon matPrefix>military_tech</mat-icon>
