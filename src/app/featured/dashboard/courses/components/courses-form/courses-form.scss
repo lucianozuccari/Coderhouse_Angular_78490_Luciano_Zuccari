@@ -1,5 +1,535 @@
-form {
+// Dark Side - Imperio Galáctico Theme - Modal Form
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  padding: 20px;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1a0000 0%, #000000 100%);
+  border: 3px solid #8b0000;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 
+    0 0 60px rgba(139, 0, 0, 0.9),
+    inset 0 0 60px rgba(139, 0, 0, 0.2);
+  position: relative;
+  pointer-events: all;
+  animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  // Borde animado estilo Sith
+  &::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #ff0000, #8b0000, #ff0000, #8b0000);
+    background-size: 400% 400%;
+    border-radius: 12px;
+    z-index: -1;
+    animation: imperial-glow 3s ease infinite;
+    opacity: 0.5;
+  }
+
+  // Efecto de escaneo interno
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      #ff0000 50%, 
+      transparent 100%);
+    animation: sith-scanline-vertical 4s linear infinite;
+    opacity: 0.6;
+  }
+}
+
+.modal-header {
+  background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
+  border-bottom: 3px solid #8b0000;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      #ff0000 50%, 
+      transparent 100%);
+    animation: sith-scanline 3s linear infinite;
+  }
+
+  .modal-title {
+    margin: 0;
+    color: #ff0000;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 
+      0 0 15px rgba(255, 0, 0, 0.9),
+      0 0 30px rgba(255, 0, 0, 0.6);
+    font-family: 'Courier New', monospace;
+  }
+
+  .btn-close {
+    background: rgba(20, 0, 0, 0.6);
+    border: 2px solid #8b0000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    mat-icon {
+      color: #8b0000;
+      transition: all 0.3s ease;
+    }
+
+    &:hover:not(:disabled) {
+      background: rgba(139, 0, 0, 0.4);
+      border-color: #ff0000;
+      box-shadow: 
+        0 0 20px rgba(255, 0, 0, 0.6),
+        inset 0 0 10px rgba(255, 0, 0, 0.2);
+      transform: rotate(90deg);
+      
+      mat-icon {
+        color: #ff0000;
+        filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.9));
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.modal-body {
+  padding: 24px;
+  max-height: calc(90vh - 180px);
+  overflow-y: auto;
+  
+  // Custom scrollbar Dark Side
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(20, 0, 0, 0.5);
+    border-left: 1px solid #8b0000;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #8b0000, #ff0000, #8b0000);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    
+    &:hover {
+      background: linear-gradient(180deg, #ff0000, #cc0000, #ff0000);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+// Estilos para Angular Material Dark Side
+::ng-deep {
+  .dark-field {
+    width: 100%;
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-flex {
+      background: rgba(20, 0, 0, 0.8);
+      border: 2px solid #8b0000;
+      border-radius: 6px;
+      padding: 8px 12px;
+      transition: all 0.3s ease;
+      box-shadow: 
+        0 0 10px rgba(139, 0, 0, 0.4),
+        inset 0 0 15px rgba(139, 0, 0, 0.2);
+
+      &:hover {
+        border-color: #cc0000;
+        box-shadow: 
+          0 0 20px rgba(204, 0, 0, 0.5),
+          inset 0 0 20px rgba(204, 0, 0, 0.3);
+      }
+    }
+
+    &.mat-focused {
+      .mat-form-field-flex {
+        border-color: #ff0000;
+        box-shadow: 
+          0 0 25px rgba(255, 0, 0, 0.7),
+          inset 0 0 25px rgba(255, 0, 0, 0.3);
+      }
+    }
+
+    .mat-form-field-label {
+      color: #ff4444 !important;
+      text-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    &.mat-focused .mat-form-field-label {
+      color: #ff0000 !important;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    }
+
+    .mat-input-element,
+    .mat-select-value-text {
+      color: #cccccc !important;
+      font-family: 'Courier New', monospace;
+      
+      &::placeholder {
+        color: rgba(136, 136, 136, 0.5);
+      }
+    }
+
+    .mat-select-arrow {
+      color: #8b0000;
+    }
+
+    &.mat-focused .mat-select-arrow {
+      color: #ff0000;
+    }
+
+    mat-icon[matPrefix] {
+      color: #8b0000;
+      margin-right: 8px;
+      filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.6));
+      transition: all 0.3s ease;
+    }
+
+    &.mat-focused mat-icon[matPrefix] {
+      color: #ff0000;
+      filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.9));
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-error {
+      color: #ff6666;
+      font-size: 11px;
+      margin-top: 4px;
+      text-shadow: 0 0 5px rgba(255, 102, 102, 0.6);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    textarea.mat-input-element {
+      resize: vertical;
+      min-height: 100px;
+    }
+  }
+
+  // Select panel Dark Side
+  .mat-select-panel {
+    background: linear-gradient(135deg, #1a0000 0%, #000000 100%);
+    border: 2px solid #8b0000;
+    box-shadow: 
+      0 0 30px rgba(139, 0, 0, 0.8),
+      inset 0 0 30px rgba(139, 0, 0, 0.2);
+
+    .mat-option {
+      color: #888888;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(139, 0, 0, 0.3);
+        color: #ff4444;
+        text-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+      }
+
+      &.mat-selected {
+        background: rgba(255, 0, 0, 0.2);
+        color: #ff0000;
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+        
+        &:hover {
+          background: rgba(255, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid #8b0000;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    overflow: hidden;
+
+    mat-icon {
+      transition: all 0.3s ease;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
+  .btn-cancel {
+    background: linear-gradient(145deg, #1a1a1a, #000000);
+    border: 2px solid #444444;
+    color: #888888;
+    box-shadow: 0 0 10px rgba(68, 68, 68, 0.4);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      border-color: #666666;
+      color: #cccccc;
+      box-shadow: 0 0 20px rgba(100, 100, 100, 0.6);
+      transform: translateY(-2px);
+      
+      mat-icon {
+        transform: rotate(-10deg);
+      }
+    }
+  }
+
+  .btn-submit {
+    background: linear-gradient(145deg, #2a0000, #000000);
+    border: 2px solid #8b0000;
+    color: #ff0000;
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.6),
+      inset 0 0 15px rgba(139, 0, 0, 0.2);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(145deg, #4a0000, #1a0000);
+      border-color: #ff0000;
+      color: #ffffff;
+      box-shadow: 
+        0 0 35px rgba(255, 0, 0, 0.9),
+        inset 0 0 25px rgba(255, 0, 0, 0.3);
+      transform: translateY(-2px);
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+
+      &::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      mat-icon {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.9));
+      }
+    }
+
+    &.saving {
+      mat-icon.spinner {
+        animation: spin 1s linear infinite;
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes sith-scanline {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes sith-scanline-vertical {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes imperial-glow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .modal-container {
+    padding: 10px;
+  }
+
+  .modal-content {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: 16px;
+    
+    .modal-title {
+      font-size: 18px;
+      letter-spacing: 2px;
+    }
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
 }

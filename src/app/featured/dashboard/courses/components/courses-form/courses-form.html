@@ -1,57 +1,154 @@
-<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
-  @if (isEditing) {
-  <mat-form-field appearance="fill">
-    <mat-label>ID</mat-label>
-    <input matInput disabled value="{{ courseId }}" />
-  </mat-form-field>
-  }
+<div class="modal-backdrop" (click)="goBack()"></div>
 
-  <mat-form-field class="w-full">
-    <mat-label>Titulo</mat-label>
-    <input
-      [ngClass]="{
-          'is-invalid': inputInvalid('title'),
-          'is-valid': inputValid('title') && createForm.get('title')?.dirty,
-        }"
-      matInput
-      name="title"
-      formControlName="title"
-    />
+<div class="modal-container">
+  <div class="modal-content">
+    <!-- Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">
+        {{ isEditMode ? 'MODIFICAR CURSO' : 'CREAR NUEVO CURSO' }}
+      </h2>
+      <button class="btn-close" (click)="goBack()" [disabled]="isSaving">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
 
-    <mat-error> {{ getError('title') }} </mat-error>
-  </mat-form-field>
+    <!-- Body -->
+    <div class="modal-body">
+      <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <!-- Title -->
+          <div class="form-field full-width">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Título del Curso</mat-label>
+              <input matInput formControlName="title" placeholder="Ej: The Force Fundamentals" />
+              <mat-icon matPrefix>title</mat-icon>
+              <mat-error *ngIf="courseForm.get('title')?.invalid && courseForm.get('title')?.touched">
+                {{ getErrorMessage('title') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-  <mat-form-field class="w-full">
-    <mat-label>Descripción</mat-label>
-    <textarea
-      matInput
-      placeholer="Descripción"
-      name="description"
-      formControlName="description"
-    ></textarea>
+          <!-- Description -->
+          <div class="form-field full-width">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Descripción</mat-label>
+              <textarea 
+                matInput 
+                formControlName="description" 
+                rows="4"
+                placeholder="Describe el contenido del curso..."
+              ></textarea>
+              <mat-icon matPrefix>description</mat-icon>
+              <mat-error *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched">
+                {{ getErrorMessage('description') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-    <mat-error> {{ getError('description') }} </mat-error>
-  </mat-form-field>
+          <!-- Category -->
+          <div class="form-field">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Categoría</mat-label>
+              <mat-select formControlName="category">
+                <mat-option *ngFor="let cat of categories" [value]="cat">
+                  {{ cat }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>category</mat-icon>
+              <mat-error *ngIf="courseForm.get('category')?.invalid && courseForm.get('category')?.touched">
+                {{ getErrorMessage('category') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-  <mat-form-field class="w-full">
-    <mat-label>Fecha inicio - Fecha fin</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input matStartDate formControlName="beginDate" placeholder="Fecha inicio" />
-      <input matEndDate formControlName="endDate" placeholder="Fecha fin" />
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"> </mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
+          <!-- Level -->
+          <div class="form-field">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Nivel</mat-label>
+              <mat-select formControlName="level">
+                <mat-option *ngFor="let lvl of levels" [value]="lvl">
+                  {{ lvl }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>bar_chart</mat-icon>
+              <mat-error *ngIf="courseForm.get('level')?.invalid && courseForm.get('level')?.touched">
+                {{ getErrorMessage('level') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-  <mat-form-field class="w-full">
-    <mat-label>Estado</mat-label>
-    <mat-select name="status" formControlName="status">
-      <mat-option value="SCHEDULED">Programado</mat-option>
-      <mat-option value="STARTED">Iniciado</mat-option>
-      <mat-option value="FINISHED">Terminado</mat-option>
-    </mat-select>
-  </mat-form-field>
+          <!-- Rank Required -->
+          <div class="form-field">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Rango Requerido</mat-label>
+              <mat-select formControlName="rankRequired">
+                <mat-option *ngFor="let rank of ranks" [value]="rank">
+                  {{ rank }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>military_tech</mat-icon>
+              <mat-error *ngIf="courseForm.get('rankRequired')?.invalid && courseForm.get('rankRequired')?.touched">
+                {{ getErrorMessage('rankRequired') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-  <button mat-raised-button color="primary">Guardar</button>
-</form>
+          <!-- Language -->
+          <div class="form-field">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Idioma</mat-label>
+              <mat-select formControlName="language">
+                <mat-option *ngFor="let lang of languages" [value]="lang">
+                  {{ lang }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>language</mat-icon>
+              <mat-error *ngIf="courseForm.get('language')?.invalid && courseForm.get('language')?.touched">
+                {{ getErrorMessage('language') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Authority -->
+          <div class="form-field full-width">
+            <mat-form-field appearance="fill" class="dark-field">
+              <mat-label>Autoridad</mat-label>
+              <mat-select formControlName="authority">
+                <mat-option *ngFor="let auth of authorities" [value]="auth">
+                  {{ auth }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>shield</mat-icon>
+              <mat-error *ngIf="courseForm.get('authority')?.invalid && courseForm.get('authority')?.touched">
+                {{ getErrorMessage('authority') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button 
+            type="button" 
+            class="btn-cancel" 
+            (click)="goBack()"
+            [disabled]="isSaving"
+          >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="btn-submit"
+            [disabled]="isSaving"
+            [class.saving]="isSaving"
+          >
+            <mat-icon *ngIf="!isSaving">{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+            <mat-icon *ngIf="isSaving" class="spinner">sync</mat-icon>
+            {{ isSaving ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear Curso') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -74,6 +74,7 @@
     </table>
 
     <mat-paginator
+      [pageSize]="10"
       [pageSizeOptions]="[5, 10, 25, 100]"
       aria-label="Select page of courses"
     ></mat-paginator>
@@ -93,7 +94,7 @@
 
 <ng-template #TemplateInfoTpl>
   <div class="form-info">
-    <p><strong>ID:</strong> {{ courseToDelete?.id }}</p>
     <p><strong>Title:</strong> {{ courseToDelete?.title }}</p>
+    <p><strong>Description:</strong> {{ courseToDelete?.description }}</p>
   </div>
 </ng-template>
