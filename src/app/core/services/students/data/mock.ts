@@ -188,8 +188,8 @@ export const mockStudents: Student[] = [
   {
     id: 24,
     name: 'IG-88',
-    birthdate: new Date('2000-02-14'), // Droides pueden tener fechas recientes
-    species: StudentSpecies.HUMAN, // O crear DROID
+    birthdate: new Date('2000-02-14'),
+    species: StudentSpecies.DROID,
     specialization: StudentSpecialization.COMBAT_PILOT,
     rank: StudentRanks.CADET,
   },
