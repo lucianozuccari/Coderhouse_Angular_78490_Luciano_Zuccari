@@ -37,6 +37,14 @@ export class AuthService {
       }),
       catchError((error) => {
         console.error('Error durante el login:', error);
+        // Si el error ya tiene un mensaje específico (credenciales incorrectas), lo mantenemos
+        if (
+          error.message === 'Usuario o email inválido' ||
+          error.message === 'Contraseña inválida'
+        ) {
+          return throwError(() => error);
+        }
+        // Solo para errores de conexión real
         return throwError(() => new Error('Error de conexión al servidor'));
       })
     );
