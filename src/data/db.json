@@ -3,22 +3,36 @@
     {
       "id": 1,
       "username": "lucianozuccari",
-      "password": "securepassword123",
-      "email": "luciano@example.com",
+      "password": "clarita",
+      "email": "luciano@enetio.com.ar",
       "role": "ADMIN"
     },
     {
       "id": 2,
-      "username": "janedoe",
-      "password": "password456",
-      "email": "jane@example.com",
+      "username": "hansolo",
+      "password": "chewie456",
+      "email": "hansolo@ilm.com",
       "role": "USER"
     },
     {
       "id": 3,
-      "username": "johndoe",
-      "password": "mypassword789",
-      "email": "john@example.com",
+      "username": "leiaorgana",
+      "password": "love_C3P0",
+      "email": "leia_princess@ilm.com",
+      "role": "USER"
+    },
+    {
+      "id": 4,
+      "username": "lukeskywalker",
+      "password": "theforce",
+      "email": "luke@ilm.com",
+      "role": "USER"
+    },
+    {
+      "id": 5,
+      "username": "r2d2",
+      "password": "beepboop",
+      "email": "r2d2@ilm.com",
       "role": "USER"
     }
   ]
