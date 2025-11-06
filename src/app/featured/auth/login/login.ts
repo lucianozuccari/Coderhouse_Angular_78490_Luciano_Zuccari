@@ -29,12 +29,16 @@ export class Login {
 
       const { usernameOrEmail, password } = this.accessForm.value;
 
-      try {
-        this.authService.login(usernameOrEmail, password);
-      } catch (error) {
-        this.errorMessage = error instanceof Error ? error.message : 'Error al iniciar sesión';
-        this.isLoading = false;
-      }
+      this.authService.login(usernameOrEmail, password).subscribe({
+        next: (user) => {
+          // Login exitoso, el AuthService ya maneja la navegación
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.errorMessage = error.message || 'Error al iniciar sesión';
+          this.isLoading = false;
+        },
+      });
     } else {
       this.accessForm.markAllAsTouched();
     }

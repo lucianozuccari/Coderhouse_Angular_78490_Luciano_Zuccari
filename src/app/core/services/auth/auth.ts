@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { API_URL } from '../../utils/constants';
 import { User } from './model/User';
 import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +15,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(usernameOrEmail: string, password: string) {
-    this.http.get<User[]>(this.usersUrl).subscribe({
-      next: (users) => {
+  login(usernameOrEmail: string, password: string): Observable<User> {
+    return this.http.get<User[]>(this.usersUrl).pipe(
+      map((users) => {
         const user = users.find(
           (user) => user.email === usernameOrEmail || user.username === usernameOrEmail
         );
@@ -31,12 +33,13 @@ export class AuthService {
         localStorage.setItem('token', user.email);
         this.user = user;
         this.router.navigate(['dashboard']);
-      },
-      error: (error) => {
+        return user;
+      }),
+      catchError((error) => {
         console.error('Error durante el login:', error);
-        throw new Error('Error de conexión al servidor');
-      },
-    });
+        return throwError(() => new Error('Error de conexión al servidor'));
+      })
+    );
   }
 
   logout() {
