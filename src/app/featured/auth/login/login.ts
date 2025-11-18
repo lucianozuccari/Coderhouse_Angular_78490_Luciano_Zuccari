@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +10,12 @@ import { AuthService } from '../../../core/services/auth/auth';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class Login {
+export class Login implements OnDestroy {
   accessForm: FormGroup;
   hidePassword: boolean = true;
   errorMessage: string = '';
   isLoading: boolean = false;
+  private destroy$ = new Subject<void>();
 
   constructor(private authService: AuthService) {
     this.accessForm = new FormGroup({
@@ -22,6 +25,11 @@ export class Login {
     });
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   onSubmit() {
     if (this.accessForm.valid) {
       this.isLoading = true;
@@ -29,16 +37,18 @@ export class Login {
 
       const { usernameOrEmail, password } = this.accessForm.value;
 
-      this.authService.login(usernameOrEmail, password).subscribe({
-        next: (user) => {
-          // Login exitoso, el AuthService ya maneja la navegación
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.errorMessage = error.message || 'Error al iniciar sesión';
-          this.isLoading = false;
-        },
-      });
+      this.authService
+        .login(usernameOrEmail, password)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (user) => {
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.errorMessage = error.message || 'Error al iniciar sesión';
+            this.isLoading = false;
+          },
+        });
     } else {
       this.accessForm.markAllAsTouched();
     }

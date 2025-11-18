@@ -34,6 +34,13 @@
       "password": "beepboop",
       "email": "r2d2@ilm.com",
       "role": "USER"
+    },
+    {
+      "id": 6,
+      "username": "admin",
+      "password": "1234",
+      "email": "admin@ilm.com",
+      "role": "ADMIN"
     }
   ]
 }

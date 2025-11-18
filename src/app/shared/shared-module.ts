@@ -6,8 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatNavList } from '@angular/material/list';
-import { MatToolbar } from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
@@ -28,8 +27,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatNavList,
-    MatToolbar,
+    MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
@@ -47,8 +45,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatNavList,
-    MatToolbar,
+    MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
