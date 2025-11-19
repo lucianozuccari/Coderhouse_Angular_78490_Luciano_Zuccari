@@ -2,11 +2,11 @@ export interface Course {
   id: number;
   title: string;
   description: string;
-  category?: string;
-  level?: CourseLevel;
-  rankRequired?: CourseRanks;
-  language?: string;
-  authority?: string;
+  category: CourseCategory;
+  level: CourseLevel;
+  rankRequired: CourseRanks;
+  language: CourseLanguage;
+  authority: CourseAuthority;
 }
 
 export enum CourseRanks {
@@ -22,7 +22,7 @@ export enum CourseLevel {
   BEGINNER = 'Beginner',
   INTERMEDIATE = 'Intermediate',
   ADVANCED = 'Advanced',
-  EXPERT = 'Expert'
+  EXPERT = 'Expert',
 }
 
 export enum CourseCategory {
@@ -59,5 +59,5 @@ export const courseColumns: string[] = [
   'rankRequired',
   'language',
   'authority',
-  'actions'
+  'actions',
 ];

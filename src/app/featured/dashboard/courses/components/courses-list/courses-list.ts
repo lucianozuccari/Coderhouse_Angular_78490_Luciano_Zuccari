@@ -47,15 +47,24 @@ export class CoursesList {
       this.dataSource.paginator.firstPage();
     }
   }
+
   confirmDelete() {
     if (this.courseToDelete) {
       this.isDeleting = true;
-      setTimeout(() => {
-        this.courseService.deleteCourse(this.courseToDelete!.id);
-        this.isDeleting = false;
-        this.isModalVisible = false;
-        this.courseToDelete = null;
-      }, 500);
+
+      // Suscribirse al Observable de deleteCourse
+      this.courseService.deleteCourse(this.courseToDelete.id).subscribe({
+        next: () => {
+          this.isDeleting = false;
+          this.isModalVisible = false;
+          this.courseToDelete = null;
+        },
+        error: (error) => {
+          console.error('Error al eliminar el curso:', error);
+          this.isDeleting = false;
+          // Aquí podrías mostrar un mensaje de error al usuario
+        },
+      });
     }
   }
 
