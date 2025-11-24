@@ -45,7 +45,7 @@
   ],
   "courses": [
     {
-      "id": "1",
+      "id": 1,
       "title": "TIE Fighter Combat Tactics",
       "description": "Entrenamiento avanzado en maniobras de combate espacial con cazas TIE. Los cadetes aprenderán formaciones de ataque, tácticas de evasión y disciplina bajo fuego enemigo.",
       "category": "Combat Tactics",
@@ -55,7 +55,7 @@
       "authority": "Republic Academy"
     },
     {
-      "id": "2",
+      "id": 2,
       "title": "Command and Control Protocols",
       "description": "Curso orientado a oficiales que buscan perfeccionar sus habilidades en liderazgo, gestión de flotas y coordinación táctica dentro de la jerarquía imperial.",
       "category": "Galactic Politics",
@@ -65,7 +65,7 @@
       "authority": "Jedi Council"
     },
     {
-      "id": "3",
+      "id": 3,
       "title": "Dark Side Fundamentals",
       "description": "Introducción a los principios del Lado Oscuro de la Fuerza. Los aprendices explorarán el control de la ira, el miedo y la pasión como fuentes de poder, bajo la guía de un Lord Sith.",
       "category": "Sith Arts",
@@ -75,7 +75,7 @@
       "authority": "Sith Order"
     },
     {
-      "id": "4",
+      "id": 4,
       "title": "Imperial Systems Engineering",
       "description": "Formación técnica en diseño y mantenimiento de sistemas críticos del Imperio. Incluye protocolos de ciberseguridad, control energético y operación de estaciones orbitales.",
       "category": "Starship Engineering",
@@ -85,7 +85,7 @@
       "authority": "Republic Academy"
     },
     {
-      "id": "5",
+      "id": 5,
       "title": "Galactic Governance and Strategy",
       "description": "Programa destinado a altos rangos del Imperio. Analiza la estructura política galáctica, estrategias de control sectorial y los principios de orden y autoridad del Nuevo Régimen.",
       "category": "Galactic Politics",
@@ -97,7 +97,7 @@
   ],
   "students": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Mara Jade",
       "birthdate": "1995-03-15",
       "species": "HUMAN",
@@ -105,7 +105,7 @@
       "rank": "OFFICER"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Thrawn",
       "birthdate": "1985-07-22",
       "species": "CHISS",
@@ -113,7 +113,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Gideon Hask",
       "birthdate": "1998-11-08",
       "species": "HUMAN",
@@ -121,7 +121,15 @@
       "rank": "COMMANDER"
     },
     {
-      "id": "5",
+      "id": 4,
+      "name": "Iden Versio",
+      "birthdate": "1997-05-20",
+      "species": "HUMAN",
+      "specialization": "COMBAT_PILOT",
+      "rank": "COMMANDER"
+    },
+    {
+      "id": 5,
       "name": "Veers Maximilian",
       "birthdate": "1982-09-12",
       "species": "HUMAN",
@@ -129,7 +137,7 @@
       "rank": "COMMANDER"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "Darth Maul",
       "birthdate": "1975-01-30",
       "species": "ZABRAK",
@@ -137,7 +145,7 @@
       "rank": "SITH_LORD"
     },
     {
-      "id": "7",
+      "id": 7,
       "name": "Admiral Piett",
       "birthdate": "1980-04-18",
       "species": "HUMAN",
@@ -145,7 +153,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "8",
+      "id": 8,
       "name": "Boba Fett",
       "birthdate": "1990-12-25",
       "species": "HUMAN",
@@ -153,7 +161,7 @@
       "rank": "OFFICER"
     },
     {
-      "id": "9",
+      "id": 9,
       "name": "Cad Bane",
       "birthdate": "1978-08-05",
       "species": "DUROS",
@@ -161,7 +169,7 @@
       "rank": "OFFICER"
     },
     {
-      "id": "10",
+      "id": 10,
       "name": "Hera Syndulla",
       "birthdate": "1993-06-14",
       "species": "TWI_LEK",
@@ -169,7 +177,7 @@
       "rank": "OFFICER"
     },
     {
-      "id": "11",
+      "id": 11,
       "name": "Krennic Orson",
       "birthdate": "1979-02-28",
       "species": "HUMAN",
@@ -177,7 +185,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "12",
+      "id": 12,
       "name": "Savage Opress",
       "birthdate": "1988-10-10",
       "species": "ZABRAK",
@@ -185,7 +193,7 @@
       "rank": "SUBOFFICER"
     },
     {
-      "id": "13",
+      "id": 13,
       "name": "Kallus Alexsandr",
       "birthdate": "1986-07-07",
       "species": "HUMAN",
@@ -193,7 +201,7 @@
       "rank": "OFFICER"
     },
     {
-      "id": "14",
+      "id": 14,
       "name": "Bossk",
       "birthdate": "1976-03-19",
       "species": "TRANDOSHAN",
@@ -201,7 +209,7 @@
       "rank": "SUBOFFICER"
     },
     {
-      "id": "15",
+      "id": 15,
       "name": "Tarkin Wilhuff",
       "birthdate": "1970-11-02",
       "species": "HUMAN",
@@ -209,7 +217,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "16",
+      "id": 16,
       "name": "Ventress Asajj",
       "birthdate": "1983-05-16",
       "species": "DATHOMIRIAN",
@@ -217,7 +225,7 @@
       "rank": "SITH_LORD"
     },
     {
-      "id": "17",
+      "id": 17,
       "name": "Zsinj Warlord",
       "birthdate": "1977-09-23",
       "species": "HUMAN",
@@ -225,7 +233,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "18",
+      "id": 18,
       "name": "Daala Natasi",
       "birthdate": "1984-12-11",
       "species": "HUMAN",
@@ -233,7 +241,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "19",
+      "id": 19,
       "name": "Pellaeon Gilad",
       "birthdate": "1981-04-29",
       "species": "HUMAN",
@@ -241,7 +249,7 @@
       "rank": "COMMANDER"
     },
     {
-      "id": "20",
+      "id": 20,
       "name": "Grievous",
       "birthdate": "1972-08-14",
       "species": "CYBORG",
@@ -249,7 +257,7 @@
       "rank": "COMMANDER"
     },
     {
-      "id": "21",
+      "id": 21,
       "name": "Pryce Arihnda",
       "birthdate": "1989-01-21",
       "species": "HUMAN",
@@ -257,7 +265,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "22",
+      "id": 22,
       "name": "Sloane Rae",
       "birthdate": "1987-06-03",
       "species": "HUMAN",
@@ -265,7 +273,7 @@
       "rank": "MOFF"
     },
     {
-      "id": "23",
+      "id": 23,
       "name": "Dengar",
       "birthdate": "1991-10-17",
       "species": "HUMAN",
@@ -273,7 +281,7 @@
       "rank": "SUBOFFICER"
     },
     {
-      "id": "24",
+      "id": 24,
       "name": "IG-88",
       "birthdate": "2000-02-14",
       "species": "DROID",
@@ -281,7 +289,7 @@
       "rank": "CADET"
     },
     {
-      "id": "25",
+      "id": 25,
       "name": "Yularen Wullf",
       "birthdate": "1974-05-08",
       "species": "HUMAN",
