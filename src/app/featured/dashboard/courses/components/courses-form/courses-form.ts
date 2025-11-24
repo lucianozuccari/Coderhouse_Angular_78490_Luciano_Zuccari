@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../../../../core/services/courses/courses';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import * as CoursesActions from '../../../../../core/store/courses/courses.actions';
 import {
   Course,
   CourseLevel,
@@ -33,7 +36,8 @@ export class CoursesForm implements OnInit {
     private fb: FormBuilder,
     private courseService: CoursesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<RootState>
   ) {}
 
   ngOnInit() {
@@ -97,34 +101,42 @@ export class CoursesForm implements OnInit {
       const courseData = this.courseForm.value;
 
       if (this.isEditMode && this.courseId) {
-        // Suscribirse al Observable de updateCourse
-        this.courseService
-          .updateCourse({
-            ...courseData,
-            id: Number(this.courseId),
-          } as Course)
-          .subscribe({
-            next: () => {
-              this.isSaving = false;
-              this.goBack();
-            },
-            error: (error) => {
-              console.error('Error al actualizar el curso:', error);
-              this.isSaving = false;
-              // Aquí podrías mostrar un mensaje de error al usuario
-            },
-          });
-      } else {
-        // Suscribirse al Observable de addCourse
-        this.courseService.addCourse(courseData as Course).subscribe({
-          next: () => {
-            this.isSaving = false;
-            this.goBack();
+        // Editar curso existente
+        const courseToUpdate = { ...(courseData as Course), id: Number(this.courseId) } as Course;
+        this.courseService.updateCourse(courseToUpdate).subscribe({
+          next: (updatedCourse) => {
+            console.log('[CoursesForm] Course updated successfully:', updatedCourse);
+            // Actualizar el store - primero obtenemos los cursos actuales y actualizamos el modificado
+            this.courseService.fetchCourses().subscribe({
+              next: (courses) => {
+                this.store.dispatch(CoursesActions.setCourses({ payload: courses }));
+                this.isSaving = false;
+                this.goBack();
+              },
+            });
           },
           error: (error) => {
-            console.error('Error al crear el curso:', error);
+            console.error('[CoursesForm] Error updating course:', error);
             this.isSaving = false;
-            // Aquí podrías mostrar un mensaje de error al usuario
+          },
+        });
+      } else {
+        // Crear nuevo curso
+        this.courseService.addCourse(courseData as Course).subscribe({
+          next: (newCourse) => {
+            console.log('[CoursesForm] Course created successfully:', newCourse);
+            // Actualizar el store - refrescamos todos los cursos
+            this.courseService.fetchCourses().subscribe({
+              next: (courses) => {
+                this.store.dispatch(CoursesActions.setCourses({ payload: courses }));
+                this.isSaving = false;
+                this.goBack();
+              },
+            });
+          },
+          error: (error) => {
+            console.error('[CoursesForm] Error creating course:', error);
+            this.isSaving = false;
           },
         });
       }

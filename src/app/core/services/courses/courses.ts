@@ -9,44 +9,21 @@ import { API_URL } from '../../utils/constants';
 })
 export class CoursesService {
   private courses: Course[] = [];
-  private courseSubject = new BehaviorSubject<Course[]>([]);
-  courses$ = this.courseSubject.asObservable();
+  // Service is now a thin HTTP client; store handles state.
   private apiUrl = `${API_URL}/courses`;
 
   constructor(private http: HttpClient) {
-    this.loadCourses();
+    // Service is now a thin HTTP client; store handles state.
   }
 
-  private loadCourses() {
-    this.http
-      .get<Course[]>(this.apiUrl)
-      .pipe(
-        tap((courses) => {
-          this.courses = courses;
-          this.courseSubject.next(courses);
-        }),
-        catchError((error) => {
-          console.error('Error loading courses:', error);
-          return of([]);
-        })
-      )
-      .subscribe();
-  }
-
-  getCourses() {
-    this.http
-      .get<Course[]>(this.apiUrl)
-      .pipe(
-        tap((courses) => {
-          this.courses = courses;
-          this.courseSubject.next(courses);
-        }),
-        catchError((error) => {
-          console.error('Error getting courses:', error);
-          return of([]);
-        })
-      )
-      .subscribe();
+  // Returns an observable for the full courses list
+  fetchCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(this.apiUrl).pipe(
+      catchError((error) => {
+        console.error('Error fetching courses:', error);
+        return of([]);
+      })
+    );
   }
 
   getCourse(id: number): Observable<Course | undefined> {
@@ -60,10 +37,6 @@ export class CoursesService {
 
   addCourse(course: Course): Observable<Course> {
     return this.http.post<Course>(this.apiUrl, course).pipe(
-      tap((newCourse) => {
-        this.courses.push(newCourse);
-        this.courseSubject.next([...this.courses]);
-      }),
       catchError((error) => {
         console.error('Error adding course:', error);
         throw error;
@@ -73,13 +46,6 @@ export class CoursesService {
 
   updateCourse(course: Course): Observable<Course> {
     return this.http.put<Course>(`${this.apiUrl}/${course.id}`, course).pipe(
-      tap((updatedCourse) => {
-        const updatedCourses = this.courses.map((c) =>
-          c.id === updatedCourse.id ? updatedCourse : c
-        );
-        this.courses = updatedCourses;
-        this.courseSubject.next(updatedCourses);
-      }),
       catchError((error) => {
         console.error('Error updating course:', error);
         throw error;
@@ -89,11 +55,6 @@ export class CoursesService {
 
   deleteCourse(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      tap(() => {
-        const updatedCourses = this.courses.filter((c) => c.id !== id);
-        this.courses = updatedCourses;
-        this.courseSubject.next(updatedCourses);
-      }),
       catchError((error) => {
         console.error('Error deleting course:', error);
         throw error;
