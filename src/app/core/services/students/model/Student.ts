@@ -1,8 +1,8 @@
 export interface Student {
   id: number;
   name: string;
-  birthdate: Date;
-  species: string;
+  birthdate: string;
+  species: StudentSpecies;
   specialization: StudentSpecialization;
   rank: StudentRanks;
 }
@@ -34,7 +34,7 @@ export enum StudentSpecies {
   GEONOSIAN = 'Geonosian',
   CYBORG = 'Cyborg',
   DROID = 'Droid',
-  KALEESH = 'Kaleesh'
+  KALEESH = 'Kaleesh',
 }
 
 export enum StudentSpecialization {
@@ -61,5 +61,5 @@ export const studentColumns: string[] = [
   'species',
   'specialization',
   'rank',
-  'actions'
+  'actions',
 ];

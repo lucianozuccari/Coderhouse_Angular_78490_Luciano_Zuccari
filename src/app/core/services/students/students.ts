@@ -1,44 +1,60 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Student } from './model/Student';
-import { mockStudents } from './data/mock';
-import { BehaviorSubject, of } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
+import { API_URL } from '../../utils/constants';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StudentService {
-  private students: Student[] = mockStudents;
-  private studentSubject = new BehaviorSubject<Student[]>([]);
-  students$ = this.studentSubject.asObservable();
+export class StudentsService {
+  private apiUrl = `${API_URL}/students`;
 
-  constructor() {
-    this.studentSubject.next(this.students);
+  constructor(private http: HttpClient) {}
+
+  // Returns an observable for the full students list
+  fetchStudents(): Observable<Student[]> {
+    return this.http.get<Student[]>(this.apiUrl).pipe(
+      catchError((error) => {
+        console.error('Error fetching students:', error);
+        return of([]);
+      })
+    );
   }
 
-  getStudents() {
-    this.studentSubject.next(this.students);
+  getStudent(id: number): Observable<Student | undefined> {
+    return this.http.get<Student>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error getting student:', error);
+        return of(undefined);
+      })
+    );
   }
 
-  getStudent(id: number) {
-    return of(this.students.find((student) => student.id === id));
+  addStudent(student: Student): Observable<Student> {
+    return this.http.post<Student>(this.apiUrl, student).pipe(
+      catchError((error) => {
+        console.error('Error adding student:', error);
+        throw error;
+      })
+    );
   }
 
-  addStudent(student: Student) {
-    const newId = this.students[this.students.length - 1].id + 1;
-    student.id = newId;
-    this.students.push(student);
-    this.studentSubject.next([...this.students]);
+  updateStudent(student: Student): Observable<Student> {
+    return this.http.put<Student>(`${this.apiUrl}/${student.id}`, student).pipe(
+      catchError((error) => {
+        console.error('Error updating student:', error);
+        throw error;
+      })
+    );
   }
 
-  updateStudent(student: Student) {
-    const updatedStudents = this.students.map((s) => (s.id === student.id ? student : s));
-    this.studentSubject.next(updatedStudents);
-    this.students = updatedStudents;
-  }
-
-  deleteStudent(id: number) {
-    const updatedStudents = this.students.filter((s) => s.id !== id);
-    this.studentSubject.next(updatedStudents);
-    this.students = updatedStudents;
+  deleteStudent(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error deleting student:', error);
+        throw error;
+      })
+    );
   }
 }

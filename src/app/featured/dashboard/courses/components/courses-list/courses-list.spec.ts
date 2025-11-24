@@ -1,42 +1,101 @@
-import { RouterTestingModule } from '@angular/router/testing';
-import { MatTableModule } from '@angular/material/table';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatFormFieldControl } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { DeleteConfirmModalComponent } from '../../../../../shared/components/modals/delete-confirm-modal/delete-confirm-modal.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import { CoursesList } from './courses-list';
+import { CoursesService } from '../../../../../core/services/courses/courses';
+import {
+  Course,
+  CourseCategory,
+  CourseLevel,
+  CourseRanks,
+  CourseLanguage,
+  CourseAuthority,
+} from '../../../../../core/services/courses/model/Course';
 
-describe('CoursesList', () => {
+describe('CoursesList Component', () => {
   let component: CoursesList;
   let fixture: ComponentFixture<CoursesList>;
 
+  const mockCourse: Course = {
+    id: 1,
+    title: 'Test Course',
+    description: 'A test course description',
+    category: CourseCategory.COMBAT_TACTICS,
+    level: CourseLevel.BEGINNER,
+    rankRequired: CourseRanks.CADET,
+    language: CourseLanguage.BASIC,
+    authority: CourseAuthority.REPUBLIC_ACADEMY,
+  };
+
   beforeEach(async () => {
+    const mockStore = {
+      select: jasmine.createSpy('select').and.returnValue(of([mockCourse])),
+      dispatch: jasmine.createSpy('dispatch'),
+    };
+
+    const mockCoursesService = {
+      fetchCourses: jasmine.createSpy('fetchCourses').and.returnValue(of([mockCourse])),
+      deleteCourse: jasmine.createSpy('deleteCourse').and.returnValue(of(void 0)),
+    };
+
     await TestBed.configureTestingModule({
       declarations: [CoursesList],
-      imports: [
-        MatIconModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatPaginator,
-        MatFormFieldControl,
-        MatInputModule,
-        MatTableModule,
-        RouterTestingModule,
-        DeleteConfirmModalComponent,
+      providers: [
+        { provide: Store, useValue: mockStore },
+        { provide: CoursesService, useValue: mockCoursesService },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CoursesList);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should initialize displayedColumns', () => {
+    expect(component.displayedColumns).toBeDefined();
+    expect(component.displayedColumns.length).toBeGreaterThan(0);
+  });
+
+  it('should initialize dataSource', () => {
+    expect(component.dataSource).toBeDefined();
+  });
+
+  it('should set course to delete when onDelete is called', () => {
+    component.onDelete(mockCourse);
+
+    expect(component.courseToDelete).toEqual(mockCourse);
+    expect(component.isModalVisible).toBe(true);
+  });
+
+  it('should close modal when closeModal is called', () => {
+    component.isModalVisible = true;
+    component.courseToDelete = mockCourse;
+
+    component.closeModal();
+
+    expect(component.isModalVisible).toBe(false);
+    expect(component.courseToDelete).toBeNull();
+  });
+
+  it('should return confirm message with course title', () => {
+    component.courseToDelete = mockCourse;
+
+    const message = component.getConfirmMessage();
+
+    expect(message).toContain(mockCourse.title);
+  });
+
+  it('should return default message when no course selected', () => {
+    component.courseToDelete = null;
+
+    const message = component.getConfirmMessage();
+
+    expect(message).toBe('¿Estás seguro de que deseas eliminar este curso?');
   });
 });

@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StudentService } from '../../../../../core/services/students/students';
-import { Student, StudentRanks, StudentSpecialization, StudentSpecies } from '../../../../../core/services/students/model/Student';
+import { StudentsService } from '../../../../../core/services/students/students';
+import {
+  Student,
+  StudentRanks,
+  StudentSpecialization,
+  StudentSpecies,
+} from '../../../../../core/services/students/model/Student';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import * as StudentsActions from '../../../../../core/store/students/students.actions';
 
 @Component({
   selector: 'app-students-form',
@@ -23,9 +31,10 @@ export class StudentsForm implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private studentService: StudentService,
+    private studentsService: StudentsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<RootState>
   ) {}
 
   ngOnInit() {
@@ -52,40 +61,76 @@ export class StudentsForm implements OnInit {
   }
 
   loadStudent(id: string) {
-    this.studentService.students$.subscribe((students) => {
-      const student = students.find((s) => s.id === Number(id));
-      if (student) {
-        // Convertir la fecha a formato YYYY-MM-DD para el input date
-        const formattedDate = new Date(student.birthdate).toISOString().split('T')[0];
-        this.studentForm.patchValue({
-          ...student,
-          birthdate: formattedDate
-        });
-      }
+    this.studentsService.getStudent(Number(id)).subscribe({
+      next: (student) => {
+        if (student) {
+          console.log('Student loaded:', student);
+          // Convertir la fecha a formato YYYY-MM-DD para el input date
+          const formattedDate = new Date(student.birthdate).toISOString().split('T')[0];
+          this.studentForm.patchValue({
+            ...student,
+            birthdate: formattedDate,
+          });
+        } else {
+          console.error('Student not found');
+          this.goBack();
+        }
+      },
+      error: (error) => {
+        console.error('Error loading student:', error);
+        this.goBack();
+      },
     });
   }
 
   onSubmit() {
     if (this.studentForm.valid) {
-      console.log('Saving...');
       this.isSaving = true;
       const studentData = {
         ...this.studentForm.value,
-        birthdate: new Date(this.studentForm.value.birthdate)
+        birthdate: this.studentForm.value.birthdate, // Mantener como string para la API
       };
 
-      setTimeout(() => {
-        if (this.isEditMode && this.studentId) {
-          this.studentService.updateStudent({
-            ...studentData, 
-            id: Number(this.studentId) 
-          } as Student);
-        } else {
-          this.studentService.addStudent(studentData as Student);
-        }
-        this.isSaving = false;
-        this.goBack();
-      }, 800);
+      if (this.isEditMode && this.studentId) {
+        // Editar estudiante existente
+        const studentToUpdate = { ...studentData, id: Number(this.studentId) } as Student;
+        this.studentsService.updateStudent(studentToUpdate).subscribe({
+          next: (updatedStudent) => {
+            console.log('[StudentsForm] Student updated successfully:', updatedStudent);
+            // Actualizar el store - refrescar todos los estudiantes
+            this.studentsService.fetchStudents().subscribe({
+              next: (students) => {
+                this.store.dispatch(StudentsActions.setStudents({ payload: students }));
+                this.isSaving = false;
+                this.goBack();
+              },
+            });
+          },
+          error: (error) => {
+            console.error('[StudentsForm] Error updating student:', error);
+            this.isSaving = false;
+          },
+        });
+      } else {
+        // Crear nuevo estudiante
+        this.studentsService.addStudent(studentData as Student).subscribe({
+          next: (newStudent) => {
+            console.log('[StudentsForm] Student created successfully:', newStudent);
+            // Actualizar el store - refrescar todos los estudiantes
+            this.studentsService.fetchStudents().subscribe({
+              next: (students) => {
+                this.store.dispatch(StudentsActions.setStudents({ payload: students }));
+                this.isSaving = false;
+                this.goBack();
+              },
+            });
+          },
+          error: (error) => {
+            console.error('[StudentsForm] Error creating student:', error);
+            this.isSaving = false;
+          },
+        });
+      }
     } else {
       this.markFormGroupTouched(this.studentForm);
     }

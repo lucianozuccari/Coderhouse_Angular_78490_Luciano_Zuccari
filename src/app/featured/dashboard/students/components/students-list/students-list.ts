@@ -1,8 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Student, studentColumns } from '../../../../../core/services/students/model/Student';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { StudentService } from '../../../../../core/services/students/students';
+import { StudentsService } from '../../../../../core/services/students/students';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { selectAllStudents } from '../../../../../core/store/students/students.selector';
+import * as StudentsActions from '../../../../../core/store/students/students.actions';
 
 @Component({
   selector: 'app-students-list',
@@ -10,7 +14,7 @@ import { StudentService } from '../../../../../core/services/students/students';
   templateUrl: './students-list.html',
   styleUrl: './students-list.scss',
 })
-export class StudentsList {
+export class StudentsList implements OnInit {
   displayedColumns: string[] = studentColumns;
   dataSource = new MatTableDataSource<Student>([]);
 
@@ -20,14 +24,26 @@ export class StudentsList {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private studentService: StudentService) {
-    this.studentService.students$.subscribe((students) => {
+  constructor(private store: Store<RootState>, private studentsService: StudentsService) {
+    this.store.select(selectAllStudents).subscribe((students) => {
+      console.log('[StudentsList] Students from store:', students);
       this.dataSource.data = students;
     });
   }
 
   ngOnInit() {
-    this.studentService.getStudents();
+    console.log('[StudentsList] Loading students directly from service');
+    // Como los efectos no están registrados, usamos el servicio directamente
+    this.studentsService.fetchStudents().subscribe({
+      next: (students) => {
+        console.log('[StudentsList] Students fetched:', students);
+        // Actualizamos el store manualmente
+        this.store.dispatch(StudentsActions.setStudents({ payload: students }));
+      },
+      error: (error) => {
+        console.error('[StudentsList] Error fetching students:', error);
+      },
+    });
   }
 
   ngAfterViewInit() {
@@ -50,12 +66,26 @@ export class StudentsList {
   confirmDelete() {
     if (this.studentToDelete) {
       this.isDeleting = true;
-      setTimeout(() => {
-        this.studentService.deleteStudent(this.studentToDelete!.id);
-        this.isDeleting = false;
-        this.isModalVisible = false;
-        this.studentToDelete = null;
-      }, 500);
+
+      // Usar el servicio directamente para eliminar
+      this.studentsService.deleteStudent(this.studentToDelete.id).subscribe({
+        next: () => {
+          console.log('[StudentsList] Student deleted successfully');
+          // Actualizar el store removiendo el estudiante
+          const currentStudents = this.dataSource.data;
+          const updatedStudents = currentStudents.filter((s) => s.id !== this.studentToDelete!.id);
+          this.store.dispatch(StudentsActions.setStudents({ payload: updatedStudents }));
+
+          // Cerrar modal
+          this.isDeleting = false;
+          this.isModalVisible = false;
+          this.studentToDelete = null;
+        },
+        error: (error) => {
+          console.error('[StudentsList] Error deleting student:', error);
+          this.isDeleting = false;
+        },
+      });
     }
   }
 
